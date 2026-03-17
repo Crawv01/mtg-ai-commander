@@ -1,0 +1,16 @@
+# Environment — NEVER commit this
+.env
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build output (for future React client build)
+public/assets/

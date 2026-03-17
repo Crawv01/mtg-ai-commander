@@ -1,0 +1,19 @@
+# Commander Arena — Python Engine Requirements
+# Install with: pip install -r requirements.txt
+
+# Core ML framework
+torch>=2.1.0          # Neural network training and inference
+
+# API server (bridges Python engine to JS frontend)
+fastapi>=0.104.0      # Modern async API framework
+uvicorn>=0.24.0       # ASGI server to run FastAPI
+
+# Data handling
+numpy>=1.26.0         # Numerical arrays (used by PyTorch)
+
+# Utilities
+python-dotenv>=1.0.0  # Load .env files
+
+# Development / testing
+pytest>=7.4.0         # Test runner
+pytest-asyncio>=0.21  # Async test support
