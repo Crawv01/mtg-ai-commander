@@ -1,17 +1,18 @@
 # ⚔️ Commander AI Arena
 
-A browser-based Magic: The Gathering Commander application where you play your physical deck against Claude-powered AI opponents. Features real-time card lookups via the Scryfall API, voice command support, and a visual board state — all running in the browser with a Node.js backend.
+A browser-based Magic: The Gathering Commander application where you play your physical deck against AI opponents. Features real-time card lookups via the Scryfall API, voice command support, and a visual board state — all running in the browser with a Node.js backend. Currently powered by the Anthropic Claude API with a custom Python ML engine in development as a full replacement.
 
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![Anthropic](https://img.shields.io/badge/Claude_API-191919?style=flat&logo=anthropic&logoColor=white)
 
 ---
 
 ## ✨ Features
 
-- **Claude-Powered AI Opponents** — Each AI player uses the Anthropic API to make strategic decisions based on the current board state, hand, and game context
+- **AI Opponents** — AI players make strategic decisions based on board state, hand, and game context — currently via Claude API, with a custom Python ML engine in development as a replacement
 - **Scryfall API Integration** — Real-time card data, rulings, and artwork fetched directly from Scryfall's database
 - **Voice Commands** — Web Speech API lets you speak actions instead of clicking
 - **Visual Board State** — Interactive UI displays each player's board, hand, life total, and graveyard
@@ -27,7 +28,8 @@ A browser-based Magic: The Gathering Commander application where you play your p
 |---|---|
 | Frontend | HTML, CSS, Vanilla JavaScript |
 | Backend | Node.js, Express |
-| AI | Anthropic Claude API |
+| AI (Current) | Anthropic Claude API |
+| AI (In Development) | Custom Python ML Engine |
 | Card Data | Scryfall API |
 | Voice | Web Speech API |
 
@@ -74,11 +76,11 @@ mtg-ai-commander/
 ├── commander-arena/
 │   ├── engine/
 │   │   ├── game_engine.js       # Core game state and turn logic
-│   │   ├── ai_player.js         # Claude API integration for AI decisions
+│   │   ├── ai_player.js         # AI decision interface (Claude or ML engine)
 │   │   └── scryfall.js          # Scryfall API card lookups
 │   ├── ml/
-│   │   ├── model.py             # ML model for card evaluation
-│   │   └── train.py             # Training scripts
+│   │   ├── model.py             # Custom ML model for AI decision-making
+│   │   └── train.py             # Model training scripts
 │   └── server/
 │       ├── server.js            # Express server
 │       ├── public/
@@ -91,11 +93,15 @@ mtg-ai-commander/
 
 ## 🤖 How the AI Works
 
-Each AI opponent is given a system prompt describing the Commander format rules, its current hand, the board state, life totals, and available mana. Claude then decides which cards to play, which creatures to attack with, and how to respond to the human player's actions.
+The project uses a two-phase AI approach:
+
+**Current: Claude API** — AI opponents currently use the Anthropic Claude API to make strategic decisions based on the serialized board state, hand, life totals, and available mana. Claude returns structured actions (play card, attack, pass, etc.) which the engine validates and executes.
+
+**In Development: Custom Python ML Engine** — A custom machine learning engine (`commander-arena/ml/`) is being built to replace Claude entirely. The goal is a self-contained AI trained specifically on MTG Commander decision-making, eliminating the dependency on an external API.
 
 The AI turn pipeline:
-1. Game state serialized and sent to Claude API
-2. Claude returns a structured action (play card, attack, pass, etc.)
+1. Game state serialized and passed to the active AI backend
+2. AI returns a structured action (play card, attack, pass, etc.)
 3. Engine validates the action against game rules
 4. Board state updates and renders to the UI
 5. Abort timeout resets if turn completes successfully
@@ -109,7 +115,7 @@ Card data is fetched from the [Scryfall API](https://scryfall.com/docs/api) at r
 - Card artwork for the visual board
 - Rulings for complex card interactions
 
-Bulk card data is downloaded separately and excluded from the repo (too large for GitHub). The app fetches individual cards on demand during gameplay.
+Bulk card data is downloaded separately and excluded from the repo. The app fetches individual cards on demand during gameplay.
 
 ---
 
@@ -127,12 +133,14 @@ Supported voice commands (via Web Speech API):
 
 - Currently supports 1v1 and basic multiplayer (full 4-player pod in progress)
 - Voice recognition accuracy depends on browser and microphone quality
-- AI decision speed depends on Anthropic API response time
+- AI decision speed depends on Anthropic API response time (will be resolved once ML engine is complete)
 
 ---
 
 ## 🗺 Roadmap
 
+- [ ] Complete Python ML engine to replace Claude API dependency
+- [ ] Train model on Commander game data
 - [ ] Full 4-player Commander pod support
 - [ ] Deck builder UI for importing decklists
 - [ ] Persistent game history and stats
